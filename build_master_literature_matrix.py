@@ -51,14 +51,30 @@ for col_num, h in enumerate(headers, 1):
     c.border = thin_border
 ws1.row_dimensions[row_num].height = 28
 
-# Read rows from crosswalk and write
-for r in range(4, ws_src.max_row + 1):
+# Read rows from crosswalk starting at row 2 (row 1 is header)
+recent_count = 0
+pre2021_count = 0
+total_studies = 0
+
+for r in range(2, ws_src.max_row + 1):
     vals = [ws_src.cell(row=r, column=c).value for c in range(1, 19)]
     if not vals[0]:
         continue
+    total_studies += 1
     row_num += 1
     ws1.row_dimensions[row_num].height = 36
     is_zebra = (row_num % 2 == 1)
+    
+    yr = str(vals[6]).strip()
+    is_pre2021 = (yr in ['2018', '2020'])
+    if is_pre2021:
+        pre2021_count += 1
+        recency_val = "No (Foundational)"
+    else:
+        recent_count += 1
+        recency_val = "Yes (2021-2026)"
+    
+    vals[10] = recency_val
     
     for col_num, val in enumerate(vals, 1):
         c = ws1.cell(row=row_num, column=col_num, value=str(val) if val is not None else "")
@@ -70,12 +86,15 @@ for r in range(4, ws_src.max_row + 1):
             c.alignment = Alignment(horizontal="center", vertical="center")
         elif col_num == 11:
             c.alignment = Alignment(horizontal="center", vertical="center")
-            if "pre-2021" in str(val).lower() or str(vals[6]) in ['2018', '2020']:
+            if is_pre2021:
                 c.font = font_pre2021
             else:
                 c.font = font_recent
-        elif col_num in [3, 4, 17, 18]:
-            c.font = font_bold if col_num in [3, 4] else font_regular
+        elif col_num in [3, 4]:
+            c.font = font_bold
+            c.alignment = Alignment(horizontal="left", vertical="center", wrap_text=True)
+        elif col_num in [17, 18]:
+            c.font = font_regular
             c.alignment = Alignment(horizontal="left", vertical="center", wrap_text=True)
         else:
             c.font = font_regular
@@ -98,24 +117,35 @@ for col_num, h in enumerate(cat_headers, 1):
     c.alignment = Alignment(horizontal="center", vertical="center")
     c.border = thin_border
 
-cat_data = [
-    ("Category A: Machine Learning and One-Class Detection", "Suresh Gopal Singh (258100001)", "9 Studies (SG01–SG09)", "Distance-based boundaries, density scoring, and reconstruction error residuals on benign baselines."),
-    ("Category B: Deep Learning and Open-Set Recognition", "Ismayra Praveen (258100002)", "10 Studies (DL01–DL10)", "Deep generative modeling, extreme value theory tail modeling, metric centroids, and explicit reject decisions."),
-    ("Category C: Anomaly, Hybrid and Adaptive Drift Detection", "Jatin (258100003)", "13 Studies (JTN01–JTN13)", "Streaming autoencoders, multi-stage signature/anomaly pipelines, statistical drift tracking, and continual learning.")
+cat_rows = [
+    ("Category A: Machine Learning and Open-Set Detection", "Suresh Gopal Singh (258100001)", 9, "One-class boundary estimation (usfAD, OC-SVM, iForest), distance-to-boundary OSR (EVM, CLAD/CLOSR), energy-based flow classifiers, and neuro-symbolic logic."),
+    ("Category B: Deep Learning and Open-Set Recognition", "Ismayra Praveen (258100002)", 10, "Generative reconstruction (CVAE, BiLSTM-AE, MemAE), extreme value theory (EVT), deep metric learning (hyperspherical centroids), and graph attention networks (SFE-GACN)."),
+    ("Category C: Anomaly, Hybrid & Adaptive Concept Drift", "Jatin (258100003)", 13, "Ensemble autoencoders (Kitsune, HELAD), hybrid signature-anomaly cascades, streaming concept drift adaptation (ENIDrift, SSF), and online tree ensembles.")
 ]
 
-for r_idx, r_data in enumerate(cat_data, 4):
-    for c_idx, val in enumerate(r_data, 1):
+for r_idx, row_data in enumerate(cat_rows, 4):
+    for c_idx, val in enumerate(row_data, 1):
         c = ws2.cell(row=r_idx, column=c_idx, value=val)
-        c.font = font_regular
+        c.font = font_bold if c_idx <= 2 else font_regular
+        c.alignment = Alignment(horizontal="center" if c_idx == 3 else "left", vertical="center", wrap_text=True)
         c.border = thin_border
-        c.alignment = Alignment(horizontal="left", vertical="center")
 
-ws2.column_dimensions['A'].width = 45
-ws2.column_dimensions['B'].width = 30
-ws2.column_dimensions['C'].width = 25
+ws2.cell(row=7, column=1, value="Total Unique Studies").font = font_bold
+ws2.cell(row=7, column=2, value="All Three Member Packs").font = font_bold
+ws2.cell(row=7, column=3, value=32).font = font_bold
+ws2.cell(row=7, column=4, value="Includes 30 recent-five-year studies (2021–2026) and 2 pre-2021 foundational baselines (Kitsune 2018, HELAD 2020); 26 core studies synthesized in final narrative.").font = font_bold
+
+for c in range(1, 5):
+    cell = ws2.cell(row=7, column=c)
+    cell.border = thin_border
+    cell.fill = PatternFill(start_color="E2E8F0", end_color="E2E8F0", fill_type="solid")
+    if c == 3: cell.alignment = Alignment(horizontal="center", vertical="center")
+
+ws2.column_dimensions['A'].width = 38
+ws2.column_dimensions['B'].width = 28
+ws2.column_dimensions['C'].width = 24
 ws2.column_dimensions['D'].width = 50
 
-# Save
-wb_out.save('literature-matrix/master-literature-matrix.xlsx')
-print("Saved literature-matrix/master-literature-matrix.xlsx successfully.")
+out_path = 'literature-matrix/master-literature-matrix.xlsx'
+wb_out.save(out_path)
+print(f"Rebuilt {out_path}: {total_studies} unique studies (Recent: {recent_count}, Pre-2021: {pre2021_count})")

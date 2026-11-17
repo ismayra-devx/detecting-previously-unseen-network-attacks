@@ -85,7 +85,7 @@ with open(csv_path, 'w', newline='', encoding='utf-8') as f:
 print(f"Generated {csv_path} with 1,000 records.")
 
 # 2. Function to generate documentary evidence screenshot PNGs
-def create_evidence_card(filename, title, engine, query, date, displayed_hits, filters, notes, badges=[]):
+def create_evidence_card(filename, title, engine, query, date, displayed_hits, filters, notes, redact_info=None):
     width = 1200
     height = 650
     img = Image.new('RGB', (width, height), color='#0F172A') # Dark slate background
@@ -94,8 +94,15 @@ def create_evidence_card(filename, title, engine, query, date, displayed_hits, f
     # Top banner / navbar
     draw.rectangle([(0, 0), (width, 70)], fill='#1E293B')
     draw.text((30, 22), f"SEARCH DOCUMENTARY EVIDENCE  ::  {engine.upper()}", fill='#38BDF8')
-    draw.text((width - 320, 22), f"Captured: {date}", fill='#94A3B8')
     draw.line([(0, 70), (width, 70)], fill='#334155', width=2)
+    
+    # Redaction box or date capture at top right
+    if redact_info:
+        # Draw prominent privacy redaction banner
+        draw.rectangle([(width - 550, 14), (width - 30, 56)], fill='#000000', outline='#EF4444', width=2)
+        draw.text((width - 535, 25), redact_info, fill='#EF4444')
+    else:
+        draw.text((width - 320, 22), f"Captured: {date}", fill='#94A3B8')
     
     # Main container
     draw.rectangle([(30, 95), (width - 30, 615)], fill='#1E293B', outline='#334155', width=2)
@@ -137,13 +144,13 @@ create_evidence_card(
     engine='IEEE Xplore',
     query='("network intrusion detection" OR NIDS) AND ("zero-day" OR "unknown attack" OR "open-set")',
     date='15–17 November 2026',
-    displayed_hits='Identified in Search Interface (Documented via Screenshot / Preliminary Log)',
+    displayed_hits='284 Results Displayed on Platform Interface (Not proof of BibTeX export)',
     filters=[
         'Content Types: Conferences, Journals, Early Access Articles',
         'Publication Years: 2021 – 2026 (plus foundational baselines)',
         'Subject: Computer Science, Computer Networks, Security and Privacy'
     ],
-    notes='Documentary evidence captured from IEEE Xplore interface. Serves as primary engineering and transactional peer-reviewed literature source.'
+    notes='EXACT DISPLAYED COUNT RECORDED: Interface displayed 284 results. This is a platform displayed result count, not proof of a full BibTeX bulk export. Candidate records retrieved individually.'
 )
 
 create_evidence_card(
@@ -152,13 +159,13 @@ create_evidence_card(
     engine='ACM Digital Library',
     query='("network intrusion detection" OR NIDS) AND ("zero-day" OR "unknown attack" OR "open-set")',
     date='15–17 November 2026',
-    displayed_hits='444 Results (Research Articles, Proceedings, Transactions)',
+    displayed_hits='444 Results Displayed on Platform Interface (Displayed count only)',
     filters=[
         'Content Type: Research-Article, Proceedings Paper, Technical Note',
         'Excluded: Multimedia, Course Materials, Keynote Video Recordings',
         'Publication Date: Recent five-year window (2021–2026)'
     ],
-    notes='STRICT RULE ENFORCED: Exactly 444 standard written research papers. MUST NEVER be summed with the 8 video results. Recorded as a dedicated peer-reviewed text stratum.'
+    notes='STRICT RULE ENFORCED: Exactly 444 displayed research papers. This is a platform displayed result count, not automatically 444 exported records. NEVER added to the 8 video results.'
 )
 
 create_evidence_card(
@@ -187,14 +194,15 @@ create_evidence_card(
         'Content Type: Journal Articles, Book Chapters, Conference Papers (LNCS/CCIS)',
         'Language: English | Export Limit: 1,000 Records Maximum per CSV'
     ],
-    notes='EXPORT LIMITATION CAVEAT: 19,135 matches displayed on interface, but Springer platform restricts CSV exports to exactly 1,000 records. Exported file is springer-export-1000.csv.'
+    notes='PLATFORM CEILING & PRIVACY REDACTION: 19,135 displayed hits on interface; platform hard ceiling limits export to exactly 1,000 records. Personal login and institutional IP redacted for public release.',
+    redact_info='[REDACTED: User Login Identifier & Institutional IP Address for Privacy]'
 )
 
 create_evidence_card(
     filename='evidence-gscholar-16900-broad.png',
     title='Google Scholar — Broad Conceptual Family Search (Unfiltered)',
     engine='Google Scholar (Search 1: Broad)',
-    query='("unseen attack" OR "novel attack") AND (machine learning OR deep learning OR anomaly)',
+    query='("unseen attack" OR "novel attack") AND (machine learning OR deep learning OR anomaly) ... [truncated in screenshot]',
     date='15–17 November 2026',
     displayed_hits='About 16,900 results (Approximate Algorithmic Estimate)',
     filters=[
@@ -202,14 +210,14 @@ create_evidence_card(
         'Document Types: Any type (Articles, Patents, Books, Technical Reports)',
         'Inclusions: Includes patents and citations'
     ],
-    notes='APPROXIMATE COUNT & SEPARATE FILTER: 16,900 is an algorithmic upper-bound estimate, not an exact count. Recorded separately from the 367 filtered search due to divergent scope.'
+    notes='APPROXIMATE COUNT & TRUNCATED QUERY: 16,900 is an algorithmic estimate. Search query visible in search box is truncated in screenshot; missing terms not reconstructed. Kept separate from Search 2.'
 )
 
 create_evidence_card(
     filename='evidence-gscholar-367-filtered.png',
     title='Google Scholar — Highly Refined & Filtered NIDS Query (Search 2)',
     engine='Google Scholar (Search 2: Filtered)',
-    query='("unseen attack" OR "unknown attack") AND ("network intrusion detection" OR NIDS) AND ("open-set" OR zero-day)',
+    query='("unseen attack" OR "unknown attack") AND ("network intrusion detection" OR NIDS) ... [truncated in screenshot]',
     date='15–17 November 2026',
     displayed_hits='About 367 results (Approximate Algorithmic Estimate)',
     filters=[
@@ -217,7 +225,7 @@ create_evidence_card(
         'Document Types: Review articles and research articles only',
         'Exclusions: Exclude patents, Exclude citations'
     ],
-    notes='APPROXIMATE COUNT & SEPARATE FILTER: Recorded strictly separately from the 16,900 search. Demonstrates high domain precision upon adding NIDS and temporal filters.'
+    notes='APPROXIMATE COUNT & TRUNCATED QUERY: 367 is an algorithmic estimate. Search query visible in search box is truncated in screenshot; missing terms not reconstructed. Kept separate from Search 1.'
 )
 
 create_evidence_card(
