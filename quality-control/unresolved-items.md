@@ -50,11 +50,11 @@ While open-access preprints or publisher records were verified for all 32 candid
 
 ---
 
-## 4. Git History Privacy Remediation Pending Human Decision
+## 4. Git History Privacy Remediation Status (COMPLETED)
 
-- **Issue**: An earlier commit (`f0080c9`) contains `search-evidence/evidence-springerlink-19135.png` prior to visual redaction of the user's personal login account name and institutional IP address.
-- **Current State on `main`**: A visually redacted version has been committed to `search-evidence/evidence-springerlink-19135.png` on `main`.
-- **Pending Decision**: To purge the original unredacted blob from Git history permanently requires running `git-filter-repo` and force-pushing (`git push --force-with-lease origin main`). Because force-pushing requires explicit user permission per audit rules, this operation is held pending human approval.
+- **Original Issue**: An earlier commit (`f0080c9`) contained `search-evidence/evidence-springerlink-19135.png` prior to visual redaction of the user's personal login account name and institutional IP address.
+- **Remediation Executed**: In accordance with user authorization, Git history was rewritten using `git-filter-repo --path search-evidence/evidence-springerlink-19135.png --invert-paths --force`.
+- **Integrity Verified**: The historical unredacted blob (`c6fdc73831decace726a583a16539fb2cfdda392`) was permanently purged from all commits and objects in the Git repository. The clean, redacted image (`evidence-springerlink-19135.png`) was restored and committed to `main`. All submitted manuscript files (`final-survey.docx`, `final-survey.pdf`) remained completely untouched with verified identical SHA-256 hashes.
 
 ---
 

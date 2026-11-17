@@ -81,22 +81,16 @@ To guarantee that the submitted deliverables have not been altered in any way, t
   - **Jatin (258100003)**: 13 candidate studies. Reconciled register; abstracts and key method sections examined; personal reading in progress.
 - **Integrity Rule**: Antigravity has not marked any paper as personally read without explicit human member confirmation.
 
-### Finding 6: Privacy Redaction of Springer Screenshot & Git History Remediation
+### Finding 6: Privacy Redaction of Springer Screenshot & Git History Remediation (COMPLETED)
 - **Issue Discovered**: The captured evidence card/screenshot `search-evidence/evidence-springerlink-19135.png` contained visible personal login account name and institutional IP address in the header.
 - **Immediate Corrective Action**:
   - `build_search_evidence.py` was updated to render a prominent, opaque privacy redaction banner: `[REDACTED: User Login Identifier & Institutional IP Address for Privacy]` directly covering the sensitive header area.
   - The image was regenerated and saved to `search-evidence/evidence-springerlink-19135.png`.
-- **Git History Audit & Permanent Remediation**:
-  - Git history inspection reveals that the initial commit (`f0080c9`) contains the unredacted image blob in the Git object database.
-  - *Remediation Command for Human Execution*: To purge this blob permanently from Git history without leaving orphaned objects:
-    ```bash
-    git filter-repo --path search-evidence/evidence-springerlink-19135.png --invert-paths
-    # Re-stage and commit the redacted evidence-springerlink-19135.png
-    git add search-evidence/evidence-springerlink-19135.png
-    git commit -m "chore: add privacy-redacted SpringerLink evidence image"
-    git push --force-with-lease origin main
-    ```
-  - *Constraint Adherence*: In strict compliance with the audit instruction ("Do not force-push without explicit approval"), no history-rewriting or force-push has been executed. The redacted file is staged normally on `main`, and the remediation procedure is documented for user approval.
+- **Git History Permanent Remediation Executed**:
+  - Upon receiving explicit user authorization, Git history was rewritten using `git-filter-repo --path search-evidence/evidence-springerlink-19135.png --invert-paths --force`.
+  - The sensitive historical unredacted blob (`c6fdc73831decace726a583a16539fb2cfdda392`) was permanently purged and scrubbed from all commits in the repository.
+  - The clean redacted screenshot (`evidence-springerlink-19135.png`) was restored into `search-evidence/` and committed to `main`.
+  - Verification confirmed that the unredacted image does not exist in any reachable commit or Git object. All submitted survey manuscript files (`final-survey.docx`, `final-survey.pdf`) maintained verified identical SHA-256 hashes before and after the operation.
 
 ### Finding 7: Repository Hygiene & .gitignore Audit
 - **Audit Verification**: `.gitignore` was inspected and verified to contain:
@@ -152,8 +146,7 @@ To guarantee that the submitted deliverables have not been altered in any way, t
 ## 4. Unresolved Items Requiring Human Decision
 
 1. **Git History Purging (Force-Push Authorization)**:
-   - *Status*: The redacted SpringerLink evidence image is committed cleanly on `main`.
-   - *Decision*: If the repository owner wants to purge the previous unredacted blob from commit `f0080c9`, they may authorize running `git-filter-repo` and `git push --force-with-lease origin main`. Per instructions, Antigravity has not executed this force-push.
+   - *Status*: **COMPLETED**. The historical unredacted screenshot was purged from Git history using `git-filter-repo`. The redacted screenshot was restored and committed to `main`.
 2. **Cover Page Pending Institutional Inputs**:
    - *Status*: Course title, course code, team number, supervisor details, coordinator name, and student institutional emails remain marked `[Pending Confirmation]` on the submitted cover page.
    - *Decision*: These items must be confirmed by the human student team prior to oral viva examination.
