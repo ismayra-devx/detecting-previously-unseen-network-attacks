@@ -1,0 +1,108 @@
+% Suresh References Database
+% Category: Machine Learning and Open-Set Detection
+% Member: Suresh Gopal Singh (Enrolment: 258100001)
+% Project: Detecting Previously Unseen Network Attacks
+% Verified set of 9 candidate papers (SG01-SG09) incorporating Day 3 audit corrections
+
+@article{sg01_guo2023review,
+  author  = {Yang Guo},
+  title   = {A Review of Machine Learning-Based Zero-Day Attack Detection: Challenges and Future Directions},
+  journal = {Computer Communications},
+  volume  = {198},
+  pages   = {175--185},
+  year    = {2023},
+  month   = jan,
+  doi     = {10.1016/j.comcom.2022.11.001},
+  url     = {https://doi.org/10.1016/j.comcom.2022.11.001},
+  note    = {Peer-reviewed survey; verified journal catalogue record; abstract confirms signature-based detection limits against zero-day attacks}
+}
+
+@article{sg02_uddin2024usfad,
+  author  = {Md. Ashraf Uddin and Sunil Aryal and Mohamed Reda Bouadjenek and Muna Al-Hawawreh and Md. Alamin Talukder},
+  title   = {{usfAD} Based Effective Unknown Attack Detection Focused {IDS} Framework},
+  journal = {arXiv preprint arXiv:2403.11180},
+  year    = {2024},
+  month   = mar,
+  url     = {https://arxiv.org/abs/2403.11180},
+  note    = {Preprint (cs.CR); evaluated across 10 benchmark IDS datasets; verified RF F1 falls to 0\% (accuracy 51.88\%) when four attack classes are withheld; note internal paper inconsistency: text reports 80.23\% accuracy on UNSW-NB15 while Table 2 reports 82.15\%; noise trick limitation reflects binary space coverage and high compute cost}
+}
+
+@inproceedings{sg03_smolen2023comparing,
+  author    = {Timotej Smolen and Lenka Benova},
+  title     = {Comparing Autoencoder and Isolation Forest in Network Anomaly Detection},
+  booktitle = {Proceedings of the 33rd Conference of Open Innovations Association (FRUCT)},
+  year      = {2023},
+  doi       = {10.23919/FRUCT58615.2023.10143005},
+  url       = {https://www.fruct.org/files/publications/volume-33/fruct33/Smo.pdf},
+  note      = {Conference proceeding; verified 90,910,622 unlabelled web requests; RAE latency 0.099 s vs IF 0.468 s per 1,000 samples (GPU accelerated); zero overlap in top-100 anomaly lists; publication year 2023 marked to confirm from printed volume}
+}
+
+@article{sg04_carrera2022combining,
+  author  = {Francesco Carrera and Vincenzo Dentamaro and Stefano Galantucci and Andrea Iannacone and Donato Impedovo and Giuseppe Pirlo},
+  title   = {Combining Unsupervised Approaches for Near Real-Time Network Traffic Anomaly Detection},
+  journal = {Applied Sciences},
+  volume  = {12},
+  number  = {3},
+  pages   = {1759},
+  year    = {2022},
+  month   = feb,
+  doi     = {10.3390/app12031759},
+  url     = {https://doi.org/10.3390/app12031759},
+  note    = {Open-access journal article; verified exact MemAE-EIF F1 values: 0.9234 on KDDCUP99, 0.9172 on NSL-KDD, and 0.7146 on CIC-IDS2017 (inferred from text); verified GPU requirement, EIF memory constraints, and threshold derivation from known anomaly share}
+}
+
+@article{sg05_souza2021novel,
+  author  = {Manuela M. C. Souza and Camila Pontes and Joao Gondim and Luis P. F. Garcia and Luiz DaSilva and Marcelo A. Marotta},
+  title   = {A Novel Open Set Energy-Based Flow Classifier for Network Intrusion Detection},
+  journal = {arXiv preprint arXiv:2109.11224},
+  year    = {2021},
+  url     = {https://arxiv.org/abs/2109.11224},
+  note    = {Preprint (cs.CR); verified 6 authors on arXiv (E. Cavalcante absent from arXiv version); verified closed-set macro F1 0.752; verified open-set AUROC 0.859 vs OCN 0.938 and AUPRC 0.993 vs 0.935; verified that Bot, PortScan and Web Attack were almost totally misclassified; published subsequently in Computers \& Security, vol. 157, art. 104569, 2025}
+}
+
+@article{sg06_farrukh2023detecting,
+  author  = {Yasir Ali Farrukh and Syed Wali and Irfan Khan and Nathaniel D. Bastian},
+  title   = {Detecting Unknown Attacks in {IoT} Environments: An Open Set Classifier for Enhanced Network Intrusion Detection},
+  journal = {arXiv preprint arXiv:2309.07461},
+  year    = {2023},
+  month   = sep,
+  url     = {https://arxiv.org/abs/2309.07461},
+  note    = {Preprint (cs.CR); verified 88\% detection rate of unknown attacks on CIC-IDS2017 packet payloads; Day 3 audit removed unverified ECOD/PReNet comparative percentages; five held-out attack classes flagged as pending full-text source confirmation}
+}
+
+@incollection{sg07_bizzarri2025neuro,
+  author    = {Alice Bizzarri and Chung-En Yu and Brian Jalaian and Fabrizio Riguzzi and Nathaniel D. Bastian},
+  title     = {Neuro-symbolic Integration for Open Set Recognition in Network Intrusion Detection},
+  booktitle = {AIxIA 2024 -- Advances in Artificial Intelligence},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {15450},
+  pages     = {50--63},
+  publisher = {Springer, Cham},
+  year      = {2025},
+  doi       = {10.1007/978-3-031-80607-0_5},
+  url       = {https://doi.org/10.1007/978-3-031-80607-0_5},
+  note      = {Book chapter / conference proceedings; verified venue details and exact AUROC values: Infiltration 0.9843, SSH-Patator 0.9939, FTP-Patator 0.9950, UNSW-NB15 0.9939; XGBoost trained with novel class examples}
+}
+
+@article{sg08_miran2026hybrid,
+  author  = {Ara Zozan Miran and Govand Salih Kadir},
+  title   = {A Hybrid Machine Learning Approach for Enhancing Intrusion Detection Systems Using {CICIDS2017} Dataset},
+  journal = {Dasinya Journal for Engineering and Informatics},
+  volume  = {2},
+  number  = {2},
+  pages   = {16--25},
+  year    = {2026},
+  doi     = {10.65542/djei.v2i2.49},
+  url     = {https://doi.org/10.65542/djei.v2i2.49},
+  note    = {Journal article; verified 1,668,530 records (1,402,023 benign, 266,507 attack); verified XGBoost accuracy 99.3\% and F1 99.4\%; One-Class SVM accuracy 92.1\% and recall 59.2\%; split mismatch noted: counts yield 56.2/18.8/25.0\% rather than stated 60/20/20\%; article number listed as 16 and 17 on different pages; peer-review status not explicitly stated; class-level holdout not described}
+}
+
+@article{sg09_wilkie2026novel,
+  author  = {Jack Wilkie and Hanan Hindy and Craig Michie and Christos Tachtatzis and James Irvine and Robert Atkinson},
+  title   = {A Novel Contrastive Loss for Zero-Day Network Intrusion Detection},
+  journal = {IEEE Transactions on Network and Service Management},
+  year    = {2026},
+  doi     = {10.1109/TNSM.2026.3652529},
+  url     = {https://arxiv.org/abs/2601.09902},
+  note    = {Journal article / arXiv preprint; verified Lycos2017 setup with 1,789,954 flows, 14 classes, with Heartbleed and SQL Injection held out; verified CLAD mean open-set AUROC 0.9966 vs DUAD 0.9357; verified CLOSR OpenAUC 0.9694 vs multi-stage 0.7985; IEEE TNSM venue inferred from DOI prefix and pending final issue confirmation; unsupported claims of corrected CICIDS2017 and lower closed-set accuracy removed}
+}

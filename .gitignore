@@ -1,0 +1,16 @@
+# Ignore private/local original files and copyrighted materials
+source_material/
+Antigravity_Source_Material_Package/
+temp_zip/
+
+# Ignore Python bytecode and temporary files
+__pycache__/
+*.pyc
+test_*.docx
+test_*.ps1
+test_*.py
+
+# Operating system artifacts
+Thumbs.db
+Desktop.ini
+.DS_Store
